@@ -1,73 +1,75 @@
-import java.util.ArrayList;
+// Classe BankAccount
+class BankAccount {
+    protected String account;
+    protected double balance;
 
-public class Main {
-    // Classe Contact
-    static class Contact {
-        String name;
-        String phoneNumber;
-
-        public Contact(String name, String phoneNumber) {
-            this.name = name;
-            this.phoneNumber = phoneNumber;
-        }
+    public BankAccount(String account, double balance) {
+        this.account = account;
+        this.balance = balance;
     }
 
-    // Classe ContactsManager
-    static class ContactsManager {
-        ArrayList<Contact> contactsList;
-
-        public ContactsManager() {
-            contactsList = new ArrayList<>();
-        }
-
-        public void addContact(Contact contact) {
-            contactsList.add(contact);
-        }
-
-        public Contact searchContact(String name) {
-            for (Contact contact : contactsList) {
-                if (contact.name.equalsIgnoreCase(name)) {
-                    return contact;
-                }
-            }
-            return null;
-        }
+    public String getAccount() {
+        return account;
     }
 
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+}
+
+// Classe CheckingAccount (Compte Courant)
+class CheckingAccount extends BankAccount {
+    private double limit;
+
+    public CheckingAccount(String account, double balance, double limit) {
+        super(account, balance);
+        this.limit = limit;
+    }
+
+    public double getLimit() {
+        return limit;
+    }
+
+    public void setLimit(double limit) {
+        this.limit = limit;
+    }
+}
+
+// Classe SavingsAccount (Compte d'épargne)
+class SavingsAccount extends BankAccount {
+    public SavingsAccount(String account, double balance) {
+        super(account, balance);
+    }
+}
+
+// Classe COD (Certificat de Dépôt)
+class COD extends BankAccount {
+    public COD(String account, double balance) {
+        super(account, balance);
+    }
+}
+
+// Classe principale BankManager
+public class BankManager {
     public static void main(String[] args) {
-        // Créer un objet ContactsManager
-        ContactsManager myContactsManager = new ContactsManager();
+        // Création d'une instance de CheckingAccount
+        CheckingAccount checkingAccount = new CheckingAccount("CHK123", 1500.0, 500.0);
+        System.out.println("Checking Account: " + checkingAccount.getAccount() + ", Balance: " + checkingAccount.getBalance() + ", Limit: " + checkingAccount.getLimit());
 
-        // Créer et ajouter des contacts
-        addSampleContacts(myContactsManager);
+        // Création d'une instance de SavingsAccount
+        SavingsAccount savingsAccount = new SavingsAccount("SAV456", 3000.0);
+        System.out.println("Savings Account: " + savingsAccount.getAccount() + ", Balance: " + savingsAccount.getBalance());
 
-        // Rechercher un contact
-        searchAndPrintContact(myContactsManager, "Charlie");
-    }
-
-    private static void addSampleContacts(ContactsManager contactsManager) {
-        Contact contact1 = new Contact("Alice", "123-456-7890");
-        contactsManager.addContact(contact1);
-
-        Contact contact2 = new Contact("Bob", "234-567-8901");
-        contactsManager.addContact(contact2);
-
-        Contact contact3 = new Contact("Charlie", "345-678-9012");
-        contactsManager.addContact(contact3);
-
-        Contact contact4 = new Contact("David", "456-789-0123");
-        contactsManager.addContact(contact4);
-
-        Contact contact5 = new Contact("Eve", "567-890-1234");
-        contactsManager.addContact(contact5);
-    }
-
-    private static void searchAndPrintContact(ContactsManager contactsManager, String name) {
-        Contact searchedContact = contactsManager.searchContact(name);
-        if (searchedContact != null) {
-            System.out.println("Phone number of " + searchedContact.name + ": " + searchedContact.phoneNumber);
-        } else {
-            System.out.println("Contact not found.");
-        }
+        // Création d'une instance de COD
+        COD cod = new COD("COD789", 10000.0);
+        System.out.println("COD Account: " + cod.getAccount() + ", Balance: " + cod.getBalance());
     }
 }
